@@ -1,0 +1,37 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory",
+    "file": "mem_db.json"
+  },
+  "watson-conversation": {
+    "name": "watson-conversation",
+    "connector": "rest",
+    "operations": [],
+    "crud": false,
+    "options": {
+      "headers": {
+        "accept": "application/json",
+        "content-type": "application/json"
+      }
+    }
+  },
+  "nlu": {
+    "name": "nlu",
+    "baseURL": "",
+    "crud": false,
+    "connector": "rest"
+  },
+  "zillow": {
+    "name": "zillow",
+    "baseURL": "",
+    "crud": false,
+    "connector": "rest"
+  },
+  "street-view": {
+    "name": "street-view",
+    "baseURL": "",
+    "crud": false,
+    "connector": "rest"
+  }
+}

@@ -1,0 +1,45 @@
+<div *ngIf="currentProperty">
+  <div class='property-details'>
+    <p> <b> {{currentProperty.address}}</b> </p>
+    <div class="property-items">
+      <a [href]="currentProperty.homeDetailsLink" target="_blank">
+        <div class="row">
+          <div class="col-xs-6 col-md-6">
+            <img  src="/api/street-view/getStreetView?address={{currentProperty.address}}&access_token={{token}}" style='width:100%;'>
+          </div>
+          <div class="col-xs-6 col-md-6">
+            <p> {{currentProperty.finishedSqFt || 'Unknown'}} sqft </p>
+            <p> {{currentProperty.bedrooms || 'Unknown'}} beds </p>
+            <p> {{currentProperty.bathrooms || 'Unknown'}} baths </p>
+            <p *ngIf="currentProperty.estimate"> <b> Zestimate<sup>®</sup>: </b> {{currentProperty.estimate | currency:'USD':true:'1.0-0'}} </p>
+            <p *ngIf="currentProperty.lastSoldDate"> <b> Last Sold Date: </b> {{currentProperty.lastSoldDate | date}} </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class='col-xs-8 zillow-branding'>
+            <p> © Zillow, Inc., 2006-2016. Use is subject to <a href='http://www.zillow.com/corp/Terms.htm'> Terms of Use </a></p>
+            <p> <a href="http://www.zillow.com/wikipages/What-is-a-Zestimate/"> What's a Zestimate? </a></p>
+          </div>
+          <div class="col-xs-4">
+            <a href="https://www.zillow.com/">
+              <img src="assets/img/zillow/zillow_logo.gif" style="height:25px; width:100px; float:right" alt="Real Estate on Zillow">
+            </a>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div>
+
+  <!--
+  <div class="row">
+    <div class="col-xs-12">
+      <a href="https://www.zillow.com/">
+        <img src="assets/img/zillow/zillow_logo.gif" style="height:25px; width:100px; float:right" alt="Real Estate on Zillow">
+      </a>
+    </div>
+  </div>
+-->
+</div>

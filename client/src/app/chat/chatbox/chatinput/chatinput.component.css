@@ -1,0 +1,19 @@
+.form-inline {
+  margin-top: 30px;
+}
+.form-group {
+  width: 100%;
+}
+.message-bar {
+  width: calc(100% - 65px);
+  float: left;
+}
+.message-send {
+  width: 60px;
+  float: right;
+}
+.btn-default {
+    color: white;
+    background-color: #4178be;
+    border-color: #4178be;
+}

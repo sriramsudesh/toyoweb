@@ -1,0 +1,20 @@
+<form class="form-inline" autocomplete="off">
+  <div class="form-group ">
+    <input
+      #chatInput
+      [(ngModel)]="text"
+      (keypress) = "emitKeyPress($event)"
+      type="text"
+      class="form-control message-bar"
+      id="chat-input"
+      placeholder="Send a message to Watson! For example: I want to install Acrobat Writer"
+      name="textInput"
+      autocomplete="off">
+    <button
+      type="button"
+      class="btn btn-default message-send"
+      (click)="emitSendMessage()">
+      Send
+    </button>
+  </div>
+</form>

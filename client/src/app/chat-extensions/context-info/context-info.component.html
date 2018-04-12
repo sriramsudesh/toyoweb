@@ -1,0 +1,17 @@
+<div *ngIf="address" class="context-info">
+  <p *ngIf="address"><b> What does Watson know?</b></p>
+  <div>
+    <p *ngIf="address"> You want to sell your property at {{address}} </p>
+    <!--
+    <p *ngIf="addressValidated && address"> You have {{addressValidated === "false" ? 'not' : ''}} confirmed an address </p>
+  -->
+    <p *ngIf="timeframe"> You want to sell in the following timeframe: {{timeframe}} </p>
+    <p *ngIf="needReplacement"> You will {{needReplacement === "false" ? 'not' : ''}} need to buy a new home after the sale </p>
+    <p *ngIf="agent"> You are {{agent.indexOf(":No") != -1 ? 'not' : ''}} working with an agent </p>
+    <p *ngIf="contract && agent"> You {{contract.indexOf("Yes") != -1 ? 'have' : 'do not have'}} an exclusive contract with their agent </p>
+    <p *ngIf="contractExpiry"> Your contract will expire: {{contractExpiry}}</p>
+    <p *ngIf="reasonForSale"> You want to sell for the following reason: {{reasonForSale}} </p>
+    <p *ngIf="phone"> Your phone number is {{phone}} </p>
+    <p *ngIf="email"> Your email address is {{email}} </p>
+  </div>
+</div>

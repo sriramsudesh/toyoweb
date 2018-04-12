@@ -1,0 +1,24 @@
+.property-details {
+  line-height: 1.2rem;
+}
+
+.property-items {
+  margin-top: 10px;
+}
+
+p {
+  margin-bottom: 5px
+}
+
+a {
+  color: black;
+}
+a:hover {
+  text-decoration: none;
+}
+
+.zillow-branding {
+  font-size: 10px;
+  line-height: 10px;
+  margin-top: 5px
+}

@@ -1,0 +1,53 @@
+{
+  "name": "zillow-property-details",
+  "plural": "zillow",
+  "base": "Model",
+  "idInjection": false,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "homeDetailsLink": {
+      "type": "string"
+    },
+    "address": {
+      "type": "string"
+    },
+    "yearBuilt": {
+      "type": "string"
+    },
+    "finishedSqFt": {
+      "type": "string"
+    },
+    "bathrooms": {
+      "type": "string"
+    },
+    "bedrooms": {
+      "type": "string"
+    },
+    "lastSoldDate": {
+      "type": "string"
+    },
+    "estimate": {
+      "type": "string"
+    }
+  },
+  "hidden": ["id"],
+  "validations": [],
+  "relations": {},
+  "acls": [
+    {
+      "principalType": "ROLE",
+      "principalId": "$everyone",
+      "permission": "DENY",
+      "property": "*"
+    },
+    {
+      "principalType": "ROLE",
+      "principalId": "$authenticated",
+      "permission": "ALLOW",
+      "property": "*"
+    }
+  ],
+  "methods": {}
+}
