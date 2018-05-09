@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+/* Adding CSS for hyperlink in chat box Start 
+Added Date : 04/14/2018 */
+.fromAnchorLinkClass, .fromAnchorLinkClass:hover {
+  color: #fff;
+  text-decoration: underline
+}
+.toAnchorLinkClass {
+  color: #337ab7;
+  text-decoration: underline
+}
+/* Adding CSS for hyperlink in chat box End */

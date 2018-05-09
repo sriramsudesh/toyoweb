@@ -1,6 +1,36 @@
 <div class="chatbox">
   <div class="scrolling-box" id='scrolling-chat-box'>
-    <wcga-chatbubble *ngFor='let message of messages; let i = index' direction="{{message.direction}}" message="{{message.message}}" type="{{message.type}}" [enrichment]="message.enrichment" adjacent="{{i >= 1 && messages[i-1].direction === message.direction}}"> </wcga-chatbubble>
+    <!-- Convert Link Text to Hyper link Start  
+    Added Date : 04/14/2018 -->
+	<div *ngFor='let message of messages; let i = index'>
+		<div *ngIf="message.direction == 'from'">
+			<div class="message-box" ng-reflect-klass="message-box" ng-reflect-ng-class="[object Object]" style="transform: none">
+			  <div ng-reflect-class-name="from-watson" class="from-watson">
+			    <div ng-reflect-class-name=" from-watson-icon" class=" from-watson-icon">
+			      <div class="from-watson-icon" ng-reflect-klass="from-watson-icon" ng-reflect-ng-class="[object Object]">
+			        <img src="assets/img/ibm/watson/watson-globe.png" style="width:50px">
+			      </div>
+			    </div>
+			    <div class="from-watson-inner" ng-reflect-klass="from-watson-inner" ng-reflect-ng-class="[object Object]" style="background-color:#4178be">
+			     <div [innerHTML]="message.message"> 
+			      </div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+		<div *ngIf="message.direction == 'to'">
+			<div class="message-box" ng-reflect-klass="message-box" ng-reflect-ng-class="[object Object]" style="transform: none">
+			  <div ng-reflect-class-name="to-watson" class="to-watson">
+			    <div ng-reflect-class-name=" to-watson-icon" class=" to-watson-icon">
+			    </div>
+			    <div class="to-watson-inner" ng-reflect-klass="to-watson-inner" ng-reflect-ng-class="[object Object]">
+			      <div [innerHTML]="message.message"></div>
+			    </div>
+			  </div>
+			</div>
+		</div>
+	</div>
+	<!-- Convert Link Text to Hyper link End -->
     <wcga-chatbubble direction="from" message="..." type="indicator" [showMessage]="awaitingIndicator" (animateEnd)="indicatorAnimationCompleteHandler($event)" adjacent="{{messages.length > 0 && messages[messages.length-1].direction === 'from'}}"> </wcga-chatbubble>
   </div>
   <wcga-chatinput

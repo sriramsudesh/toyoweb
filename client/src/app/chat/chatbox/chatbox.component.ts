@@ -17,6 +17,7 @@ You may obtain a copy of the License at
 
 /* global $:false */
 import { Component, OnInit } from '@angular/core'
+
 import { ChatMessage } from '../../classes/chat.message.class'
 import { AppCommService } from '../../app-comm.service'
 import { scrollToBottomOfChat } from '../util/util'
@@ -36,6 +37,7 @@ export class ChatboxComponent implements OnInit {
   awaitingIndicator: boolean = true
   canDispatch: boolean = false
   dispatcher = new ChatDispatcher()
+  result: any = {}
 
   constructor(private _appComm: AppCommService) {
     // Subscription to AppComm Events
@@ -46,7 +48,9 @@ export class ChatboxComponent implements OnInit {
       if (event.type === AppCommService.typeEnum.conversationSent) {
         if (event.subType === AppCommService.subTypeEnum.conversationSent.standard) {
           // Message sent, standard mechanism (not a silent message)
-          this.messages.push(new ChatMessage(event.data as string, 'to', 'text', false, {}))
+          this.result = this.convertLinkToHyperLink(event.data, 'to');
+
+          this.messages.push(new ChatMessage(this.result as string, 'to', 'text', false, {}))
           scrollToBottomOfChat()
           this.dispatcher.showIndicatorStatus(true)
         }
@@ -62,15 +66,16 @@ export class ChatboxComponent implements OnInit {
         this.dispatcher.dataReadyStatus(true)
         try {
           let messageArray: Array<string> = event.data.message.output.text
-
           for (let message of messageArray) {
             if (message) {
-              this.dispatcher.addToQueue(new ChatMessage(message, 'from', 'text', false, {}))
+              this.result = this.convertLinkToHyperLink(message, 'from');
+              this.dispatcher.addToQueue(new ChatMessage(this.result, 'from', 'text', false, {}))
             }
           }
         } catch (e) {
           // Fallback and just show the preformatted response
-          this.dispatcher.addToQueue(new ChatMessage(event.data.text, 'from', 'text', false, {}))
+          this.result = this.convertLinkToHyperLink(event.data.text, 'from');
+          this.dispatcher.addToQueue(new ChatMessage(this.result, 'from', 'text', false, {}))
         }
         scrollToBottomOfChat()
       //
@@ -129,7 +134,7 @@ export class ChatboxComponent implements OnInit {
 
 
 /*
-
+  
 
   // This is a way to add new messages of specicial types beyond text.
   // Each type is an enrichment
@@ -146,4 +151,44 @@ export class ChatboxComponent implements OnInit {
     }
   }
 */
+  
+  /* convertLinkToHyperLink Function Start 
+  Purpose : If the message has any link text , this function convert to hyperlink.
+  Added Date : 04/14/2018 */
+  convertLinkToHyperLink(plainText, direction): string {
+    let replacedText;
+    let replacePattern1;
+    let replacePattern2;
+    let replacePattern3;
+    if (direction == 'from') {
+    
+      //URLs starting with http://, https://, or ftp://
+      replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+      replacedText = plainText.replace(replacePattern1, '<a class="fromAnchorLinkClass" href="$1" target="_blank">$1</a>');
+
+      //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+      replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+      replacedText = replacedText.replace(replacePattern2, '$1<a class="fromAnchorLinkClass" href="http://$2" target="_blank">$2</a>');
+
+      //Change email addresses to mailto:: links.
+      replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+      replacedText = replacedText.replace(replacePattern3, '<a class="fromAnchorLinkClass" href="mailto:$1">$1</a>');
+    }
+    else if (direction == 'to') {
+      //URLs starting with http://, https://, or ftp://
+      replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+      replacedText = plainText.replace(replacePattern1, '<a class="toAnchorLinkClass" href="$1" target="_blank">$1</a>');
+
+      //URLs starting with "www." (without // before it, or it'd re-link the ones done above).
+      replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+      replacedText = replacedText.replace(replacePattern2, '$1<a class="toAnchorLinkClass" href="http://$2" target="_blank">$2</a>');
+
+      //Change email addresses to mailto:: links.
+      replacePattern3 = /(([a-zA-Z0-9\-\_\.])+@[a-zA-Z\_]+?(\.[a-zA-Z]{2,6})+)/gim;
+      replacedText = replacedText.replace(replacePattern3, '<a class="toAnchorLinkClass" href="mailto:$1">$1</a>');
+    }
+    return replacedText;
+  }
+  /* convertLinkToHyperLink Function End */
+
 }
